@@ -13,6 +13,9 @@ class User {
   final int? referredBy;
   final double referralEarnings;
   final int profileCompleteness;
+  final String? profilePhotoUrl;
+  final double? rating;
+  final int? totalTrips;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime lastSignedIn;
@@ -31,6 +34,9 @@ class User {
     this.referredBy,
     this.referralEarnings = 0.0,
     this.profileCompleteness = 0,
+    this.profilePhotoUrl,
+    this.rating,
+    this.totalTrips,
     required this.createdAt,
     required this.updatedAt,
     required this.lastSignedIn,
@@ -51,6 +57,9 @@ class User {
       referredBy: json['referred_by'],
       referralEarnings: (json['referral_earnings'] ?? 0.0).toDouble(),
       profileCompleteness: json['profile_completeness'] ?? 0,
+      profilePhotoUrl: json['profile_photo_url'],
+      rating: json['rating'] != null ? (json['rating'] as num).toDouble() : null,
+      totalTrips: json['total_trips'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
       lastSignedIn: DateTime.parse(json['last_signed_in']),
@@ -72,6 +81,9 @@ class User {
       'referred_by': referredBy,
       'referral_earnings': referralEarnings,
       'profile_completeness': profileCompleteness,
+      'profile_photo_url': profilePhotoUrl,
+      'rating': rating,
+      'total_trips': totalTrips,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
       'last_signed_in': lastSignedIn.toIso8601String(),

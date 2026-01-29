@@ -1,7 +1,7 @@
 class AppConstants {
   // API Configuration
   static const String supabaseUrl = 'https://ruxygwkcpyhcekkgytmp.supabase.co';
-  static const String supabaseAnonKey = 'sb_publishable_KW8ZbblignMjnqhKWuh35Q_qtgpFfcJ';
+  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1eHlnd2tjcHloY2Vra2d5dG1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NDQ5MDAsImV4cCI6MjA4NTIyMDkwMH0.oTrRii038yPwjJVvkupxHGefJv1xmI2YO-6WBn8xQT0';
   static const String googleMapsApiKey = 'AIzaSyBy_Ee_CKO3CrMF7TLofcLPT4ANvm9NVR8';
   static const String firebaseProjectId = 'dk-tuktuky';
   

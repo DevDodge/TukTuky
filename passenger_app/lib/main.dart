@@ -281,16 +281,31 @@ class _AuthScreenState extends State<AuthScreen>
     
     setState(() => _isLoading = true);
     
-    // Simulate login delay
-    await Future.delayed(const Duration(seconds: 2));
-    
-    setState(() => _isLoading = false);
-    
-    // Navigate to home on success
-    if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeScreenFunctional()),
+    try {
+      // Authenticate with Supabase
+      final response = await SupabaseService().client.auth.signInWithPassword(
+        email: _loginEmailController.text.trim(),
+        password: _loginPasswordController.text,
       );
+      
+      if (response.user != null) {
+        // Ensure user record exists in database
+        await SupabaseService().ensureUserRecordExists();
+        
+        _showMessage('Login successful!');
+        
+        if (mounted) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const HomeScreenFunctional()),
+          );
+        }
+      }
+    } catch (e) {
+      _showMessage('Login failed: ${e.toString()}', isError: true);
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -315,15 +330,48 @@ class _AuthScreenState extends State<AuthScreen>
     
     setState(() => _isLoading = true);
     
-    // Simulate signup delay
-    await Future.delayed(const Duration(seconds: 2));
-    
-    setState(() => _isLoading = false);
-    
-    _showMessage('Account created successfully!');
-    
-    // Switch to login tab
-    _tabController.animateTo(0);
+    try {
+      // Sign up with Supabase Auth
+      final response = await SupabaseService().client.auth.signUp(
+        email: _signupEmailController.text.trim(),
+        password: _signupPasswordController.text,
+        data: {
+          'full_name': _signupNameController.text.trim(),
+          'phone': '+20${_signupPhoneController.text.trim()}',
+        },
+      );
+      
+      if (response.user != null) {
+        // Create user record in the users table
+        final now = DateTime.now().toIso8601String();
+        await SupabaseService().client.from('users').insert({
+          'open_id': response.user!.id,
+          'email': _signupEmailController.text.trim(),
+          'phone': '+20${_signupPhoneController.text.trim()}',
+          'name': _signupNameController.text.trim(),
+          'login_method': 'email',
+          'role': 'passenger',
+          'is_blocked': false,
+          'language': 'ar',
+          'referral_earnings': 0.0,
+          'profile_completeness': 0,
+          'created_at': now,
+          'updated_at': now,
+          'last_signed_in': now,
+        });
+        
+        _showMessage('Account created successfully! Please check your email to verify.');
+        
+        // Switch to login tab
+        _tabController.animateTo(0);
+      }
+    } catch (e) {
+      _showMessage('Signup failed: ${e.toString()}', isError: true);
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   Future<void> _handleSocialLogin(String provider) async {

@@ -123,6 +123,36 @@ class LocationNotifier extends StateNotifier<LocationState> {
     }
   }
 
+  Future<void> updateSavedLocation(
+    int locationId,
+    String name,
+    String address,
+    double latitude,
+    double longitude,
+    String type,
+  ) async {
+    try {
+      final updatedLocation = await _supabaseService.updateSavedLocation(
+        locationId,
+        {
+          'name': name,
+          'address': address,
+          'latitude': latitude,
+          'longitude': longitude,
+          'location_type': type,
+        },
+      );
+
+      state = state.copyWith(
+        savedLocations: state.savedLocations
+            .map((loc) => loc.id == locationId ? updatedLocation : loc)
+            .toList(),
+      );
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
   Future<void> deleteSavedLocation(int locationId) async {
     try {
       await _supabaseService.deleteSavedLocation(locationId);

@@ -247,6 +247,23 @@ class SupabaseService {
     }
   }
 
+  Future<models.SavedLocation> updateSavedLocation(
+      int locationId, Map<String, dynamic> locationData) async {
+    try {
+      final response = await _client
+          .from('saved_locations')
+          .update(locationData)
+          .eq('id', locationId)
+          .select()
+          .single();
+
+      return models.SavedLocation.fromJson(response);
+    } catch (e) {
+      logger.e('Error updating saved location: $e');
+      rethrow;
+    }
+  }
+
   Future<void> deleteSavedLocation(int locationId) async {
     try {
       await _client

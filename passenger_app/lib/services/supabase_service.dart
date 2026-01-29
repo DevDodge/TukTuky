@@ -42,7 +42,7 @@ class SupabaseService {
           .eq('open_id', session.user.id)
           .single();
 
-      return User.fromJson(response);
+      return models.User.fromJson(response);
     } catch (e) {
       logger.e('Error getting current user: $e');
       return null;
@@ -58,7 +58,7 @@ class SupabaseService {
           .select()
           .single();
 
-      return User.fromJson(response);
+      return models.User.fromJson(response);
     } catch (e) {
       logger.e('Error updating user profile: $e');
       rethrow;
@@ -75,7 +75,7 @@ class SupabaseService {
           .select()
           .single();
 
-      return Trip.fromJson(response);
+      return models.Trip.fromJson(response);
     } catch (e) {
       logger.e('Error creating trip: $e');
       rethrow;
@@ -90,7 +90,7 @@ class SupabaseService {
           .eq('id', tripId)
           .single();
 
-      return Trip.fromJson(response);
+      return models.Trip.fromJson(response);
     } catch (e) {
       logger.e('Error getting trip: $e');
       return null;
@@ -107,7 +107,7 @@ class SupabaseService {
           .range(offset, offset + limit - 1);
 
       return (response as List)
-          .map((trip) => Trip.fromJson(trip))
+          .map((trip) => models.Trip.fromJson(trip))
           .toList();
     } catch (e) {
       logger.e('Error getting user trips: $e');
@@ -124,7 +124,7 @@ class SupabaseService {
           .select()
           .single();
 
-      return Trip.fromJson(response);
+      return models.Trip.fromJson(response);
     } catch (e) {
       logger.e('Error updating trip status: $e');
       rethrow;
@@ -154,7 +154,7 @@ class SupabaseService {
         .stream(primaryKey: ['id'])
         .eq('trip_id', tripId)
         .map((offers) => (offers as List)
-            .map((offer) => DriverOffer.fromJson(offer))
+            .map((offer) => models.DriverOffer.fromJson(offer))
             .toList());
   }
 
@@ -167,7 +167,7 @@ class SupabaseService {
           .select()
           .single();
 
-      return DriverOffer.fromJson(response);
+      return models.DriverOffer.fromJson(response);
     } catch (e) {
       logger.e('Error accepting offer: $e');
       return null;
@@ -196,7 +196,7 @@ class SupabaseService {
           .eq('user_id', userId)
           .single();
 
-      return Wallet.fromJson(response);
+      return models.Wallet.fromJson(response);
     } catch (e) {
       logger.e('Error getting wallet: $e');
       return null;
@@ -208,7 +208,7 @@ class SupabaseService {
         .from('wallets')
         .stream(primaryKey: ['id'])
         .eq('user_id', userId)
-        .map((wallets) => wallets.isNotEmpty ? Wallet.fromJson(wallets[0]) : null);
+        .map((wallets) => wallets.isNotEmpty ? models.Wallet.fromJson(wallets[0]) : null);
   }
 
   // ==================== SAVED LOCATIONS ====================
@@ -222,7 +222,7 @@ class SupabaseService {
           .order('is_default', ascending: false);
 
       return (response as List)
-          .map((location) => SavedLocation.fromJson(location))
+          .map((location) => models.SavedLocation.fromJson(location))
           .toList();
     } catch (e) {
       logger.e('Error getting saved locations: $e');
@@ -240,7 +240,7 @@ class SupabaseService {
           .select()
           .single();
 
-      return SavedLocation.fromJson(response);
+      return models.SavedLocation.fromJson(response);
     } catch (e) {
       logger.e('Error creating saved location: $e');
       rethrow;
@@ -283,7 +283,7 @@ class SupabaseService {
           .lt('valid_from', now);
 
       return (response as List)
-          .map((code) => PromoCode.fromJson(code))
+          .map((code) => models.PromoCode.fromJson(code))
           .toList();
     } catch (e) {
       logger.e('Error getting promo codes: $e');
@@ -303,7 +303,7 @@ class SupabaseService {
           .lt('valid_from', now)
           .single();
 
-      return PromoCode.fromJson(response);
+      return models.PromoCode.fromJson(response);
     } catch (e) {
       logger.e('Error validating promo code: $e');
       return null;
@@ -482,7 +482,7 @@ class SupabaseService {
   Future<AuthResponse> signInWithGoogle(String idToken) async {
     try {
       return await _client.auth.signInWithIdToken(
-        provider: OAuthProvider.google,
+        provider: Provider.google,
         idToken: idToken,
       );
     } catch (e) {
@@ -494,7 +494,7 @@ class SupabaseService {
   Future<AuthResponse> signInWithApple(String idToken) async {
     try {
       return await _client.auth.signInWithIdToken(
-        provider: OAuthProvider.apple,
+        provider: Provider.apple,
         idToken: idToken,
       );
     } catch (e) {

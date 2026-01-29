@@ -55,7 +55,7 @@ class _HomeScreenFunctionalState extends ConsumerState<HomeScreenFunctional>
   void _navigateToSearch() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => const SearchLocationScreen()),
+      MaterialPageRoute(builder: (_) => const SearchLocationScreen(locationType: 'pickup')),
     );
   }
 

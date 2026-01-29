@@ -81,10 +81,10 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
             'lng': 31.4867,
           },
         ].where((result) {
-          return result['title']
+          return (result['title'] as String)
                   .toLowerCase()
                   .contains(query.toLowerCase()) ||
-              result['subtitle']
+              (result['subtitle'] as String)
                   .toLowerCase()
                   .contains(query.toLowerCase());
         }).toList();
@@ -204,7 +204,7 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
                                 ...savedLocations.map((location) {
                                   return LocationSearchResult(
                                     title: location.name,
-                                    subtitle: location.address,
+                                    subtitle: location.address ?? '',
                                     icon: location.locationType == 'home'
                                         ? Icons.home
                                         : location.locationType == 'work'

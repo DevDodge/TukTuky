@@ -140,7 +140,7 @@ class _SavedLocationsScreenState extends ConsumerState<SavedLocationsScreen> {
                         children: [
                           Text(location.name, style: AppTheme.labelLarge),
                           Text(
-                            location.address,
+                            location.address ?? '',
                             style: AppTheme.bodySmall.copyWith(
                               color: AppColors.mediumGrey,
                             ),

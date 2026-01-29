@@ -69,7 +69,7 @@ final userRatingProvider = Provider<double>((ref) {
 
 // User trip count provider
 final userTripCountProvider = Provider<int>((ref) {
-  final user = ref.watch(userProfileProfile);
+  final user = ref.watch(userProfileProvider);
   return user?.totalTrips ?? 0;
 });
 

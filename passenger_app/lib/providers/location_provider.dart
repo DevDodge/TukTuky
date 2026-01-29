@@ -172,11 +172,21 @@ final savedLocationsProvider = Provider<List<SavedLocation>>((ref) {
 });
 
 final homeLocationProvider = Provider<SavedLocation?>((ref) {
-  return ref.watch(locationProvider).getSavedLocationByType('home');
+  final locations = ref.watch(savedLocationsProvider);
+  try {
+    return locations.firstWhere((loc) => loc.locationType == 'home');
+  } catch (e) {
+    return null;
+  }
 });
 
 final workLocationProvider = Provider<SavedLocation?>((ref) {
-  return ref.watch(locationProvider).getSavedLocationByType('work');
+  final locations = ref.watch(savedLocationsProvider);
+  try {
+    return locations.firstWhere((loc) => loc.locationType == 'work');
+  } catch (e) {
+    return null;
+  }
 });
 
 final isLocationLoadingProvider = Provider<bool>((ref) {

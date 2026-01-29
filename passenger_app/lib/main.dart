@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'config/colors.dart';
-import 'screens/home/home_screen_modern.dart';
+import 'screens/home/home_screen_functional.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -281,7 +281,7 @@ class _AuthScreenState extends State<AuthScreen>
     // Navigate to home on success
     if (mounted) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeScreenModern()),
+        MaterialPageRoute(builder: (_) => const HomeScreenFunctional()),
       );
     }
   }
@@ -328,7 +328,7 @@ class _AuthScreenState extends State<AuthScreen>
     
     if (mounted) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeScreenModern()),
+        MaterialPageRoute(builder: (_) => const HomeScreenFunctional()),
       );
     }
   }

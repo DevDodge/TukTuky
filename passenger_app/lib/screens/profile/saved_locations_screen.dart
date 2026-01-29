@@ -368,8 +368,21 @@ class _AddEditLocationScreenState extends State<AddEditLocationScreen> {
         desiredAccuracy: LocationAccuracy.high,
       );
 
+      // Check if location is in Egypt (rough bounds: 22°N to 32°N, 25°E to 35°E)
+      // If not (e.g., simulator default), use Cairo as default
+      LatLng finalPosition;
+      if (position.latitude >= 22 && position.latitude <= 32 &&
+          position.longitude >= 25 && position.longitude <= 35) {
+        // Location is in Egypt, use it
+        finalPosition = LatLng(position.latitude, position.longitude);
+      } else {
+        // Location is outside Egypt (likely simulator default), use Cairo
+        finalPosition = const LatLng(30.0444, 31.2357); // Cairo, Egypt
+        _showMessage('Using Cairo as default location. Set simulator location to your actual location in Egypt.', isError: false);
+      }
+
       setState(() {
-        _selectedPosition = LatLng(position.latitude, position.longitude);
+        _selectedPosition = finalPosition;
         _isGettingCurrentLocation = false;
       });
 
@@ -380,7 +393,11 @@ class _AddEditLocationScreenState extends State<AddEditLocationScreen> {
       _getAddressFromLatLng(_selectedPosition!);
     } catch (e) {
       setState(() => _isGettingCurrentLocation = false);
-      _showMessage('Failed to get current location: $e', isError: true);
+      // If GPS fails completely, use Cairo as fallback
+      setState(() {
+        _selectedPosition = const LatLng(30.0444, 31.2357); // Cairo, Egypt
+      });
+      _showMessage('Using Cairo as default location', isError: false);
     }
   }
 

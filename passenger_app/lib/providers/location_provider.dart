@@ -186,11 +186,11 @@ final locationProvider = StateNotifierProvider<LocationNotifier, LocationState>(
   final supabaseService = ref.watch(supabaseServiceProvider);
   final currentUser = ref.watch(currentUserProvider);
 
-  if (currentUser == null) {
-    return LocationNotifier(supabaseService, 0);
-  }
+  // Get user ID from current user model, or fallback to 0 if not available
+  // Note: The screen should handle authentication before accessing this provider
+  final userId = currentUser?.id ?? 0;
 
-  return LocationNotifier(supabaseService, currentUser.id);
+  return LocationNotifier(supabaseService, userId);
 });
 
 final currentPositionProvider = Provider<Position?>((ref) {

@@ -215,10 +215,20 @@ class SupabaseService {
 
   Future<List<models.SavedLocation>> getSavedLocations(int userId) async {
     try {
+      // If userId is 0, get it from the authenticated user's database record
+      int actualUserId = userId;
+      if (userId == 0) {
+        final currentUser = await getCurrentUser();
+        if (currentUser == null) {
+          return []; // Return empty list if not authenticated
+        }
+        actualUserId = currentUser.id;
+      }
+      
       final response = await _client
           .from('saved_locations')
           .select()
-          .eq('user_id', userId)
+          .eq('user_id', actualUserId)
           .order('is_default', ascending: false);
 
       return (response as List)
@@ -233,7 +243,17 @@ class SupabaseService {
   Future<models.SavedLocation> createSavedLocation(
       int userId, Map<String, dynamic> locationData) async {
     try {
-      locationData['user_id'] = userId;
+      // If userId is 0, get it from the authenticated user's database record
+      int actualUserId = userId;
+      if (userId == 0) {
+        final currentUser = await getCurrentUser();
+        if (currentUser == null) {
+          throw Exception('User must be logged in to save locations');
+        }
+        actualUserId = currentUser.id;
+      }
+      
+      locationData['user_id'] = actualUserId;
       final response = await _client
           .from('saved_locations')
           .insert(locationData)

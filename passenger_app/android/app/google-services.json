@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "463215117660",
+    "project_id": "tuktuky-app",
+    "storage_bucket": "tuktuky-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463215117660:android:placeholder",
+        "android_client_info": {
+          "package_name": "com.tuktuky.passenger_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy_Ee_CKO3CrMF7TLofcLPT4ANvm9NVR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

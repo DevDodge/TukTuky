@@ -45,6 +45,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Google Maps API Key -->
+	<key>GMSApiKey</key>
+	<string>AIzaSyBy_Ee_CKO3CrMF7TLofcLPT4ANvm9NVR8</string>
+	
+	<!-- Location permissions -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>TukTuky needs your location to show nearby drivers and provide accurate pickup/dropoff services.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>TukTuky needs your location to track your trip and ensure your safety during the ride.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>TukTuky needs your location to provide the best ride experience and ensure your safety.</string>
+	
 	<!-- Google Sign-In URL Scheme -->
 	<key>CFBundleURLTypes</key>
 	<array>

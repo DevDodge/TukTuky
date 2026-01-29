@@ -348,7 +348,7 @@ class AppThemeGlobal {
       // ========================================================================
       // DIALOG THEME
       // ========================================================================
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: AppColors.darkGrey,
         elevation: 8,
         shape: RoundedRectangleBorder(

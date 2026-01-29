@@ -10,7 +10,9 @@ import '../../providers/location_provider.dart';
 import '../../models/models.dart';
 
 class SavedLocationsScreen extends ConsumerStatefulWidget {
-  const SavedLocationsScreen({Key? key}) : super(key: key);
+  final int initialTab;
+  
+  const SavedLocationsScreen({Key? key, this.initialTab = 0}) : super(key: key);
 
   @override
   ConsumerState<SavedLocationsScreen> createState() =>

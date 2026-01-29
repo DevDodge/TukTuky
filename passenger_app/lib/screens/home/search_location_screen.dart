@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../config/colors.dart';
 import '../../config/theme.dart';
 import '../../providers/location_provider.dart';
+import '../../services/places_service.dart';
 import '../../widgets/location_input.dart';
 
 class SearchLocationScreen extends ConsumerStatefulWidget {
@@ -24,8 +26,12 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
   late AnimationController _slideController;
   late Animation<Offset> _slideAnimation;
   final _searchController = TextEditingController();
-  List<Map<String, dynamic>> _searchResults = [];
+  final PlacesService _placesService = PlacesService();
+  
+  List<PlacePrediction> _predictions = [];
   bool _isSearching = false;
+  String? _errorMessage;
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -41,59 +47,85 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
     _slideController.forward();
   }
 
+  /// Handle search with debouncing to avoid too many API calls
   void _handleSearch(String query) {
+    // Cancel previous timer
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    
     if (query.isEmpty) {
       setState(() {
-        _searchResults = [];
+        _predictions = [];
         _isSearching = false;
+        _errorMessage = null;
       });
       return;
     }
 
     setState(() => _isSearching = true);
 
-    // Simulate API call to Google Places
-    Future.delayed(const Duration(milliseconds: 500), () {
-      setState(() {
-        _searchResults = [
-          {
-            'title': 'Downtown Cairo',
-            'subtitle': 'Cairo, Egypt',
-            'lat': 30.0444,
-            'lng': 31.2357,
-          },
-          {
-            'title': 'Giza Plateau',
-            'subtitle': 'Giza, Egypt',
-            'lat': 30.0088,
-            'lng': 31.2087,
-          },
-          {
-            'title': 'Helwan',
-            'subtitle': 'Helwan, Egypt',
-            'lat': 29.8626,
-            'lng': 31.3341,
-          },
-          {
-            'title': 'New Cairo',
-            'subtitle': 'New Cairo, Egypt',
-            'lat': 29.9774,
-            'lng': 31.4867,
-          },
-        ].where((result) {
-          return (result['title'] as String)
-                  .toLowerCase()
-                  .contains(query.toLowerCase()) ||
-              (result['subtitle'] as String)
-                  .toLowerCase()
-                  .contains(query.toLowerCase());
-        }).toList();
-        _isSearching = false;
-      });
+    // Debounce for 500ms before making API call
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      try {
+        final predictions = await _placesService.searchPlaces(query);
+        
+        if (mounted) {
+          setState(() {
+            _predictions = predictions;
+            _isSearching = false;
+            _errorMessage = predictions.isEmpty ? 'No results found' : null;
+          });
+        }
+      } catch (e) {
+        if (mounted) {
+          setState(() {
+            _predictions = [];
+            _isSearching = false;
+            _errorMessage = 'Failed to search locations';
+          });
+        }
+      }
     });
   }
 
-  void _selectLocation(Map<String, dynamic> location) {
+  /// Select a prediction and get its coordinates
+  Future<void> _selectPrediction(PlacePrediction prediction) async {
+    setState(() => _isSearching = true);
+    
+    print('Selected prediction: ${prediction.placeId} - ${prediction.mainText}');
+    
+    try {
+      final details = await _placesService.getPlaceDetails(prediction.placeId);
+      
+      print('Got details: $details');
+      
+      if (details != null && mounted) {
+        context.pop({
+          'address': prediction.mainText,
+          'fullAddress': details.formattedAddress,
+          'latitude': details.latitude,
+          'longitude': details.longitude,
+        });
+      } else {
+        // Fallback - use prediction data without coordinates
+        if (mounted) {
+          setState(() {
+            _isSearching = false;
+            _errorMessage = 'Could not get location details';
+          });
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isSearching = false;
+          _errorMessage = 'Failed to get location details';
+        });
+      }
+    }
+  }
+
+  /// Select a saved location (already has coordinates)
+  void _selectSavedLocation(Map<String, dynamic> location) {
     context.pop({
       'address': location['title'],
       'latitude': location['lat'],
@@ -103,6 +135,7 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _slideController.dispose();
     _searchController.dispose();
     super.dispose();
@@ -136,8 +169,10 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
               child: TextField(
                 controller: _searchController,
                 onChanged: _handleSearch,
+                autofocus: true,
+                textDirection: TextDirection.rtl, // Support Arabic input
                 decoration: InputDecoration(
-                  hintText: 'Search location...',
+                  hintText: 'ابحث عن موقع...', // "Search for location..." in Arabic
                   hintStyle: const TextStyle(color: AppColors.mediumGrey),
                   prefixIcon: const Icon(
                     Icons.location_on,
@@ -177,6 +212,7 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
                 cursorColor: AppColors.primary,
               ),
             ),
+            
             // Results List
             Expanded(
               child: _isSearching
@@ -189,8 +225,85 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
                     )
                   : ListView(
                       children: [
-                        // Saved Locations Section
-                        if (savedLocations.isNotEmpty && _searchResults.isEmpty)
+                        // Error Message
+                        if (_errorMessage != null && _searchController.text.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.search_off,
+                                    size: 48,
+                                    color: AppColors.mediumGrey,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    _errorMessage!,
+                                    style: TextStyle(color: AppColors.mediumGrey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        
+                        // Google Places Search Results
+                        if (_predictions.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Results',
+                                      style: AppTheme.labelLarge,
+                                    ),
+                                    const Spacer(),
+                                    // Powered by Google badge
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Powered by ',
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            color: AppColors.mediumGrey,
+                                          ),
+                                        ),
+                                        Image.asset(
+                                          'assets/images/google_logo.png',
+                                          height: 12,
+                                          errorBuilder: (_, __, ___) => Text(
+                                            'Google',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: AppColors.mediumGrey,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                ..._predictions.map((prediction) {
+                                  return LocationSearchResult(
+                                    title: prediction.mainText,
+                                    subtitle: prediction.secondaryText,
+                                    icon: Icons.location_on,
+                                    onTap: () => _selectPrediction(prediction),
+                                  );
+                                }).toList(),
+                              ],
+                            ),
+                          ),
+                        
+                        // Saved Locations Section (when no search)
+                        if (savedLocations.isNotEmpty && 
+                            _predictions.isEmpty && 
+                            _searchController.text.isEmpty)
                           Padding(
                             padding: const EdgeInsets.all(16),
                             child: Column(
@@ -210,7 +323,7 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
                                         : location.locationType == 'work'
                                             ? Icons.work
                                             : Icons.location_on,
-                                    onTap: () => _selectLocation({
+                                    onTap: () => _selectSavedLocation({
                                       'title': location.name,
                                       'lat': location.latitude,
                                       'lng': location.longitude,
@@ -220,64 +333,75 @@ class _SearchLocationScreenState extends ConsumerState<SearchLocationScreen>
                               ],
                             ),
                           ),
-                        // Search Results Section
-                        if (_searchResults.isNotEmpty)
+                        
+                        // Use Current Location Button
+                        if (_predictions.isEmpty && _searchController.text.isEmpty)
                           Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Results',
-                                  style: AppTheme.labelLarge,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: GestureDetector(
+                              onTap: () {
+                                final position = ref.read(currentPositionProvider);
+                                if (position != null) {
+                                  context.pop({
+                                    'address': 'Current Location',
+                                    'latitude': position.latitude,
+                                    'longitude': position.longitude,
+                                  });
+                                }
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: AppColors.darkGrey,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: AppColors.primary.withOpacity(0.3),
+                                  ),
                                 ),
-                                const SizedBox(height: 12),
-                                ...(_searchResults).map((result) {
-                                  return LocationSearchResult(
-                                    title: result['title'],
-                                    subtitle: result['subtitle'],
-                                    icon: Icons.location_on,
-                                    onTap: () => _selectLocation(result),
-                                  );
-                                }).toList(),
-                              ],
-                            ),
-                          ),
-                        // Recent Searches
-                        if (_searchResults.isEmpty &&
-                            _searchController.text.isEmpty)
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Recent Searches',
-                                  style: AppTheme.labelLarge,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primary.withOpacity(0.15),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: const Icon(
+                                        Icons.my_location,
+                                        color: AppColors.primary,
+                                        size: 22,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Use Current Location',
+                                            style: AppTheme.bodyMedium.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Text(
+                                            'استخدم موقعك الحالي',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: AppColors.mediumGrey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: AppColors.mediumGrey,
+                                      size: 16,
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(height: 12),
-                                LocationSearchResult(
-                                  title: 'Tahrir Square',
-                                  subtitle: 'Cairo, Egypt',
-                                  icon: Icons.history,
-                                  onTap: () => _selectLocation({
-                                    'title': 'Tahrir Square',
-                                    'lat': 30.0329,
-                                    'lng': 31.2361,
-                                  }),
-                                ),
-                                const SizedBox(height: 8),
-                                LocationSearchResult(
-                                  title: 'Egyptian Museum',
-                                  subtitle: 'Cairo, Egypt',
-                                  icon: Icons.history,
-                                  onTap: () => _selectLocation({
-                                    'title': 'Egyptian Museum',
-                                    'lat': 30.0348,
-                                    'lng': 31.2384,
-                                  }),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                       ],

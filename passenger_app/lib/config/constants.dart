@@ -1,9 +1,9 @@
 class AppConstants {
   // API Configuration
-  static const String supabaseUrl = 'YOUR_SUPABASE_URL';
-  static const String supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
-  static const String googleMapsApiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
-  static const String firebaseProjectId = 'YOUR_FIREBASE_PROJECT_ID';
+  static const String supabaseUrl = 'https://ruxygwkcpyhcekkgytmp.supabase.co';
+  static const String supabaseAnonKey = 'sb_publishable_KW8ZbblignMjnqhKWuh35Q_qtgpFfcJ';
+  static const String googleMapsApiKey = 'AIzaSyBy_Ee_CKO3CrMF7TLofcLPT4ANvm9NVR8';
+  static const String firebaseProjectId = 'dk-tuktuky';
   
   // Payment Gateway Keys
   static const String paymobApiKey = 'YOUR_PAYMOB_API_KEY';

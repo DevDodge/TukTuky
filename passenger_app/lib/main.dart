@@ -3,10 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'config/colors.dart';
+import 'config/constants.dart';
+import 'services/supabase_service.dart';
 import 'screens/home/home_screen_functional.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Supabase
+  await SupabaseService().initialize(
+    AppConstants.supabaseUrl,
+    AppConstants.supabaseAnonKey,
+  );
   
   // Initialize Firebase with error handling
   try {

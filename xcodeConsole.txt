@@ -1,0 +1,161 @@
+-- LLDB integration loaded --
+`UIScene` lifecycle will soon be required. Failure to adopt will result in an assert in the future.
+FlutterView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+Dart execution mode: JIT
+fopen failed for data file: errno = 2 (No such file or directory)
+Errors found! Invalidating cache...
+flutter: The Dart VM service is listening on http://127.0.0.1:51920/o-PIGs_SB14=/
+fopen failed for data file: errno = 2 (No such file or directory)
+Errors found! Invalidating cache...
+11.15.0 - [FirebaseCore][I-COR000012] Could not locate configuration file: 'GoogleService-Info.plist'.
+FBSDKLog: Starting with v13 of the SDK, a client token must be embedded in your client code before making Graph API calls.
+Visit https://developers.facebook.com/apps/(null)/settings/advanced/ to find your client token for this app.
+Add a key named FacebookClientToken to your Info.plist, and add your client token as its value.
+Visit https://developers.facebook.com/docs/ios/getting-started#configure-your-project for more information.
+flutter: ***** Supabase init completed Instance of 'Supabase'
+no valid “aps-environment” entitlement string found for application
+no valid “aps-environment” entitlement string found for application
+flutter: ***** SupabaseDeepLinkingMixin startAuthObserver
+flutter: \^[[38;5;12m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+flutter: \^[[38;5;12m│ #0   SupabaseService.initialize (package:passenger_app/services/supabase_service.dart:23:14)\^[[0m
+flutter: \^[[38;5;12m│ #1   <asynchronous suspension>\^[[0m
+flutter: \^[[38;5;12m├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\^[[0m
+flutter: \^[[38;5;12m│ 💡 Supabase initialized successfully\^[[0m
+flutter: \^[[38;5;12m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+11.15.0 - [FirebaseCore][I-COR000005] No app has been configured yet.
+flutter: Firebase initialization error: [core/not-initialized] Firebase has not been correctly initialized.
+flutter:
+flutter: Usually this means you've attempted to use a Firebase service before calling `Firebase.initializeApp`.
+flutter:
+flutter: View the documentation for more information: https://firebase.google.com/docs/flutter/setup
+flutter:
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854273 }
+Reporter disconnected or already stopped. { func=stop, reporterID=15384572854273 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854274 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854275 }
+flutter: ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+flutter: │ #0   PlacesService.searchPlaces (package:passenger_app/services/places_service.dart:30:15)
+flutter: │ #1   _SearchLocationScreenState._handleSearch.<anonymous closure> (package:passenger_app/screens/home/search_location_screen.dart:69:50)
+flutter: ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+flutter: │ 🐛 Searching places: https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%D8%A7%D9%84&key=AIzaSyBy_Ee_CKO3CrMF7TLofcLPT4ANvm9NVR8&types=geocode%7Cestablishment&components=country%3Aeg&language=ar
+flutter: └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+flutter: \^[[38;5;196m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+flutter: \^[[38;5;196m│ #0   PlacesService.searchPlaces (package:passenger_app/services/places_service.dart:45:19)\^[[0m
+flutter: \^[[38;5;196m│ #1   <asynchronous suspension>\^[[0m
+flutter: \^[[38;5;196m├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\^[[0m
+flutter: \^[[38;5;196m│ ⛔ Places API error: REQUEST_DENIED - You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started\^[[0m
+flutter: \^[[38;5;196m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+flutter: ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+flutter: │ #0   PlacesService.searchPlaces (package:passenger_app/services/places_service.dart:30:15)
+flutter: │ #1   _SearchLocationScreenState._handleSearch.<anonymous closure> (package:passenger_app/screens/home/search_location_screen.dart:69:50)
+flutter: ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+flutter: │ 🐛 Searching places: https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%D9%85%D9%8A&key=AIzaSyBy_Ee_CKO3CrMF7TLofcLPT4ANvm9NVR8&types=geocode%7Cestablishment&components=country%3Aeg&language=ar
+flutter: └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+flutter: \^[[38;5;196m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+flutter: \^[[38;5;196m│ #0   PlacesService.searchPlaces (package:passenger_app/services/places_service.dart:45:19)\^[[0m
+flutter: \^[[38;5;196m│ #1   <asynchronous suspension>\^[[0m
+flutter: \^[[38;5;196m├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\^[[0m
+flutter: \^[[38;5;196m│ ⛔ Places API error: REQUEST_DENIED - You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started\^[[0m
+flutter: \^[[38;5;196m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+flutter: ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+flutter: │ #0   PlacesService.searchPlaces (package:passenger_app/services/places_service.dart:30:15)
+flutter: │ #1   _SearchLocationScreenState._handleSearch.<anonymous closure> (package:passenger_app/screens/home/search_location_screen.dart:69:50)
+flutter: ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+flutter: │ 🐛 Searching places: https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%D9%85%D9%8A%D8%AF%D8%A7%D9%86&key=AIzaSyBy_Ee_CKO3CrMF7TLofcLPT4ANvm9NVR8&types=geocode%7Cestablishment&components=country%3Aeg&language=ar
+flutter: └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+flutter: \^[[38;5;196m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+flutter: \^[[38;5;196m│ #0   PlacesService.searchPlaces (package:passenger_app/services/places_service.dart:45:19)\^[[0m
+flutter: \^[[38;5;196m│ #1   <asynchronous suspension>\^[[0m
+flutter: \^[[38;5;196m├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\^[[0m
+flutter: \^[[38;5;196m│ ⛔ Places API error: REQUEST_DENIED - You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started\^[[0m
+flutter: \^[[38;5;196m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+Reporter disconnected or already stopped. { func=stop, reporterID=15384572854275 }
+CoreUI: CUIThemeStore: No theme registered with id=0
+CoreUI: CUIThemeStore: No theme registered with id=0
+-[GMSx_CCTBootCountLogTransformer transform:]: Could not get boot count: Error Domain=NSPOSIXErrorDomain Code=1 "Operation not permitted"
+Thread Performance Checker: Thread running at User-interactive quality-of-service class waiting on a thread without a QoS class specified (base priority 0). Investigate ways to avoid priority inversions
+PID: 3582, TID: 211442
+Backtrace
+=================================================================
+0   Flutter                             0x0000000109cb4518 _ZN13SkStrikeCache18findOrCreateStrikeERK12SkStrikeSpec + 80
+1   Flutter                             0x0000000109c72d6c _ZNK6SkFont10getMetricsEP13SkFontMetrics + 72
+2   Flutter                             0x0000000109e17fac _ZN8impeller29MakeTextFrameFromTextBlobSkiaERK5sk_spI10SkTextBlobE + 708
+3   Flutter                             0x0000000109e15864 _ZN3txt12_GLOBAL__N_127DisplayListParagraphPainter12drawTextBlobERK5sk_spI10SkTextBlobEffRKNSt3_fl7variantIJ7SkPaintiEEE + 804
+4   Flutter                             0x0000000109ea24e4 _ZN4skia10textlayout8TextLine5paintEPNS0_16ParagraphPainterEff + 356
+5   Flutter                             0x0000000109e9c03c _ZN4skia10textlayout13ParagraphImpl5paintEPNS0_16ParagraphPainterEff + 72
+6   Flutter                             0x0000000109e13f8c _ZN3txt13ParagraphSkia5PaintEPN7flutter18DisplayListBuilderEdd + 68
+7   Flutter                             0x000000010a07e9b8 _ZN4dart9DartEntry14InvokeFunctionERKNS_8FunctionERKNS_5ArrayES6_ + 868
+8   Flutter                             0x000000010a4998d8 Dart_InvokeClosure + 1320
+9   Flutter                             0x0000000109f63e70 _ZN7flutter5Shell20OnAnimatorBeginFrameEN3fml9TimePointEy + 784
+10  Flutter                             0x0000000109f4622c _ZNSt3_fl10__function6__funcIZN7flutter8Animator10AwaitVSyncEvE3$_0NS_9allocatorIS4_EEFvNS_10unique_ptrINS2_20FrameTimingsRecorderENS_14default_deleteIS8_EEEEEEclEOSB_ + 1272
+11  Flutter                             0x0000000109f7736c _ZNSt3_fl10__function6__funcIZN7flutter11VsyncWaiter12FireCallbackEN3fml9TimePointES5_bE3$_0NS_9allocatorIS6_EEFvvEEclEv + 940
+12  Flutter                             0x0000000109bb7f9c _ZN3fml15MessageLoopImpl10FlushTasksENS_9FlushTypeE + 336
+13  Flutter                             0x0000000109bbca9c _ZN3fml17MessageLoopDarwin11OnTimerFireEP16__CFRunLoopTimerPS0_ + 32
+14  CoreFoundation                      0x00000001892d2c00 0BE54DBE-1ADC-3588-BFFA-E7C99E8D8208 + 318464
+15  CoreFoundation                      0x00000001892d28c0 0BE54DBE-1ADC-3588-BFFA-E7C99E8D8208 + 317632
+16  CoreFoundation                      0x00000001892d2434 0BE54DBE-1ADC-3588-BFFA-E7C99E8D8208 + 316468
+17  CoreFoundation                      0x00000001892a2abc 0BE54DBE-1ADC-3588-BFFA-E7C99E8D8208 + 121532
+18  CoreFoundation                      0x00000001892a1a6c 0BE54DBE-1ADC-3588-BFFA-E7C99E8D8208 + 117356
+19  GraphicsServices                    0x000000022aeb0498 GSEventRunModal + 120
+20  UIKitCore                           0x000000018ec7adf8 6519DAFB-3D75-3374-9276-10E7CE4F4DC5 + 646648
+21  UIKitCore                           0x000000018ec23e54 UIApplicationMain + 336
+22  UIKitCore                           0x000000018ed4f820 6519DAFB-3D75-3374-9276-10E7CE4F4DC5 + 1517600
+23  Runner.debug.dylib                  0x0000000105cb8c30 $sSo21UIApplicationDelegateP5UIKitE4mainyyFZ + 128
+24  Runner.debug.dylib                  0x0000000105cb8ba0 $s6Runner11AppDelegateC5$mainyyFZ + 44
+25  Runner.debug.dylib                  0x0000000105cb8cac __debug_main_executable_dylib_entry_point + 28
+26  dyld                                0x000000018628ee28 A4040D49-9446-38E5-842B-EB8F9C971C22 + 20008
+nw_path_necp_check_for_updates Failed to copy updated result (22)
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Reporter disconnected. { function=sendMessage, reporterID=15384572854276 }
+Could not find cached accumulator for token=23833A69 type:0 in -[TUIKeyboardCandidateMultiplexer receiveExternalAutocorrectionUpdate:requestToken:]_block_invoke
+Could not find cached accumulator for token=263C7953 type:0 in -[TUIKeyboardCandidateMultiplexer receiveExternalAutocorrectionUpdate:requestToken:]_block_invoke
+Could not find cached accumulator for token=5CD05BF9 type:0 in -[TUIKeyboardCandidateMultiplexer receiveExternalAutocorrectionUpdate:requestToken:]_block_invoke
+Could not find cached accumulator for token=D9F9C9C2 type:0 in -[TUIKeyboardCandidateMultiplexer receiveExternalAutocorrectionUpdate:requestToken:]_block_invoke
+Reporter disconnected or already stopped. { func=stop, reporterID=15384572854276 }
+flutter: \^[[38;5;196m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+flutter: \^[[38;5;196m│ #0   SupabaseService.createSavedLocation (package:passenger_app/services/supabase_service.dart:265:14)\^[[0m
+flutter: \^[[38;5;196m│ #1   <asynchronous suspension>\^[[0m
+flutter: \^[[38;5;196m├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\^[[0m
+flutter: \^[[38;5;196m│ ⛔ Error creating saved location: Exception: User must be logged in to save locations\^[[0m
+flutter: \^[[38;5;196m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\^[[0m
+container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+-[GMSx_GIPPseudonymousIDStore initializeStorage]: Shared App Groups unavailable
+container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+-[GMSx_GIPPseudonymousIDStore initializeStorage]: Shared App Groups unavailable
+container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+-[GMSx_GIPPseudonymousIDStore initializeStorage]: Shared App Groups unavailable
+container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+-[GMSx_GIPPseudonymousIDStore initializeStorage]: Shared App Groups unavailable

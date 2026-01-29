@@ -5,7 +5,7 @@ class User {
   final String? name;
   final String? email;
   final String? phone;
-  final String? profilePhotoUrl;
+  final String? loginMethod;
   final String role;
   final bool isBlocked;
   final String language;
@@ -13,8 +13,6 @@ class User {
   final int? referredBy;
   final double referralEarnings;
   final int profileCompleteness;
-  final double rating;
-  final int totalTrips;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime lastSignedIn;
@@ -25,7 +23,7 @@ class User {
     this.name,
     this.email,
     this.phone,
-    this.profilePhotoUrl,
+    this.loginMethod,
     this.role = 'passenger',
     this.isBlocked = false,
     this.language = 'ar',
@@ -33,8 +31,6 @@ class User {
     this.referredBy,
     this.referralEarnings = 0.0,
     this.profileCompleteness = 0,
-    this.rating = 5.0,
-    this.totalTrips = 0,
     required this.createdAt,
     required this.updatedAt,
     required this.lastSignedIn,
@@ -47,7 +43,7 @@ class User {
       name: json['name'],
       email: json['email'],
       phone: json['phone'],
-      profilePhotoUrl: json['profile_photo_url'],
+      loginMethod: json['login_method'],
       role: json['role'] ?? 'passenger',
       isBlocked: json['is_blocked'] ?? false,
       language: json['language'] ?? 'ar',
@@ -55,8 +51,6 @@ class User {
       referredBy: json['referred_by'],
       referralEarnings: (json['referral_earnings'] ?? 0.0).toDouble(),
       profileCompleteness: json['profile_completeness'] ?? 0,
-      rating: (json['rating'] ?? 5.0).toDouble(),
-      totalTrips: json['total_trips'] ?? 0,
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
       lastSignedIn: DateTime.parse(json['last_signed_in']),
@@ -70,7 +64,7 @@ class User {
       'name': name,
       'email': email,
       'phone': phone,
-      'profile_photo_url': profilePhotoUrl,
+      'login_method': loginMethod,
       'role': role,
       'is_blocked': isBlocked,
       'language': language,
@@ -78,8 +72,6 @@ class User {
       'referred_by': referredBy,
       'referral_earnings': referralEarnings,
       'profile_completeness': profileCompleteness,
-      'rating': rating,
-      'total_trips': totalTrips,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
       'last_signed_in': lastSignedIn.toIso8601String(),

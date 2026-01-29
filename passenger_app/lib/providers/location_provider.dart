@@ -120,6 +120,7 @@ class LocationNotifier extends StateNotifier<LocationState> {
       );
     } catch (e) {
       state = state.copyWith(error: e.toString());
+      rethrow; // Re-throw so UI can catch and display proper error
     }
   }
 

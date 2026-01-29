@@ -246,11 +246,20 @@ class SupabaseService {
       // If userId is 0, get it from the authenticated user's database record
       int actualUserId = userId;
       if (userId == 0) {
-        final currentUser = await getCurrentUser();
+        var currentUser = await getCurrentUser();
+        
+        // If no user record found but we have a session, create the user record
+        if (currentUser == null && _client.auth.currentSession != null) {
+          logger.i('createSavedLocation: No user record found, creating one...');
+          currentUser = await ensureUserRecordExists();
+        }
+        
         if (currentUser == null) {
+          logger.e('createSavedLocation: No auth session or failed to create user');
           throw Exception('User must be logged in to save locations');
         }
         actualUserId = currentUser.id;
+        logger.i('createSavedLocation: Using user ID: $actualUserId');
       }
       
       locationData['user_id'] = actualUserId;
@@ -260,6 +269,7 @@ class SupabaseService {
           .select()
           .single();
 
+      logger.i('createSavedLocation: Successfully saved location');
       return models.SavedLocation.fromJson(response);
     } catch (e) {
       logger.e('Error creating saved location: $e');
@@ -516,12 +526,84 @@ class SupabaseService {
 
   // ==================== AUTHENTICATION ====================
 
+  /// Ensures a user record exists in the users table for the authenticated user.
+  /// Creates a new record if one doesn't exist, or returns the existing one.
+  Future<models.User?> ensureUserRecordExists() async {
+    try {
+      final session = _client.auth.currentSession;
+      if (session == null) {
+        logger.w('ensureUserRecordExists: No active session found');
+        return null;
+      }
+
+      final authUser = session.user;
+      logger.i('ensureUserRecordExists: Checking for user with open_id: ${authUser.id}');
+      logger.i('ensureUserRecordExists: Auth email: ${authUser.email}');
+      
+      // First, try to find an existing user with this open_id
+      try {
+        final existingUser = await _client
+            .from('users')
+            .select()
+            .eq('open_id', authUser.id)
+            .single();
+        
+        logger.i('Found existing user record for open_id: ${authUser.id}, user_id: ${existingUser['id']}');
+        return models.User.fromJson(existingUser);
+      } catch (e) {
+        // User not found, create a new one
+        logger.i('No existing user found, creating new user record for open_id: ${authUser.id}');
+        logger.i('Error from lookup (expected if user not found): $e');
+        
+        final now = DateTime.now().toIso8601String();
+        try {
+          final newUser = await _client
+              .from('users')
+              .insert({
+                'open_id': authUser.id,
+                'email': authUser.email,
+                'phone': authUser.phone,
+                'name': authUser.userMetadata?['full_name'] ?? 
+                        authUser.userMetadata?['name'] ?? 
+                        authUser.email?.split('@').first ?? 
+                        'User',
+                'login_method': authUser.appMetadata['provider'] ?? 'email',
+                'role': 'passenger',
+                'is_blocked': false,
+                'language': 'ar',
+                'referral_earnings': 0.0,
+                'profile_completeness': 0,
+                'created_at': now,
+                'updated_at': now,
+                'last_signed_in': now,
+              })
+              .select()
+              .single();
+          
+          logger.i('Successfully created new user record with id: ${newUser['id']}');
+          return models.User.fromJson(newUser);
+        } catch (insertError) {
+          logger.e('Failed to insert new user record: $insertError');
+          rethrow;
+        }
+      }
+    } catch (e) {
+      logger.e('Error in ensureUserRecordExists: $e');
+      return null;
+    }
+  }
+
   Future<AuthResponse> signInWithGoogle(String idToken) async {
     try {
-      return await _client.auth.signInWithIdToken(
+      final response = await _client.auth.signInWithIdToken(
         provider: Provider.google,
         idToken: idToken,
       );
+      
+      // Ensure user record exists in database
+      await ensureUserRecordExists();
+      
+      return response;
     } catch (e) {
       logger.e('Error signing in with Google: $e');
       rethrow;
@@ -530,10 +612,15 @@ class SupabaseService {
 
   Future<AuthResponse> signInWithApple(String idToken) async {
     try {
-      return await _client.auth.signInWithIdToken(
+      final response = await _client.auth.signInWithIdToken(
         provider: Provider.apple,
         idToken: idToken,
       );
+      
+      // Ensure user record exists in database
+      await ensureUserRecordExists();
+      
+      return response;
     } catch (e) {
       logger.e('Error signing in with Apple: $e');
       rethrow;

@@ -15,7 +15,14 @@ class AuthNotifier extends StateNotifier<AsyncValue<models.User?>> {
   void _initializeAuth() async {
     try {
       // Check if user is already logged in
-      final user = await _supabaseService.getCurrentUser();
+      var user = await _supabaseService.getCurrentUser();
+      
+      // If auth session exists but no user record, try to create one
+      if (user == null && _supabaseService.client.auth.currentSession != null) {
+        // User is authenticated but has no database record - ensure one exists
+        user = await _supabaseService.ensureUserRecordExists();
+      }
+      
       if (user != null) {
         state = AsyncValue.data(user);
       } else {
@@ -37,7 +44,13 @@ class AuthNotifier extends StateNotifier<AsyncValue<models.User?>> {
 
   Future<void> _loadUser() async {
     try {
-      final user = await _supabaseService.getCurrentUser();
+      var user = await _supabaseService.getCurrentUser();
+      
+      // If auth session exists but no user record, create one
+      if (user == null && _supabaseService.client.auth.currentSession != null) {
+        user = await _supabaseService.ensureUserRecordExists();
+      }
+      
       if (user != null) {
         state = AsyncValue.data(user);
       }
